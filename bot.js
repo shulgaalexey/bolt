@@ -15,10 +15,10 @@ bot.on('message', async msg => {
 		return;
     	}
 
-	if(!msg.content.startsWith(cmdPrefix)) {
+	/*if(!msg.content.startsWith(cmdPrefix)) {
 		msg.reply('IDK WTF is: ' + msg.content)
 		return
-	}
+	}*/
 
 	// slices off prefix from our message, then trims extra whitespace,
 	// then returns our array of words from the message
