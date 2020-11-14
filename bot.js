@@ -1,20 +1,19 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const bot = new Discord.Client();
 
 
-client.on('ready', () => {
+bot.on('ready', () => {
 	console.log('Bolt is ready!');
 });
 
 
 const cmdPrefix = '!'
 
-client.on('message', async msg => {
+bot.on('message', async msg => {
 	if (msg.content === 'ping') {
 		msg.reply('pong');
 		return;
-    }
-	return
+    	}
 
 	if(!msg.content.startsWith(cmdPrefix)) {
 		msg.reply('IDK WTF is: ' + msg.content)
@@ -33,14 +32,18 @@ client.on('message', async msg => {
 
 	//log any arguments passed with a command
 	console.log(args)
+	
+	if (comand === 'ok') {
+		msg.reply('ok')
+	}
 
 	if (command === 'hola') {
 		msg.reply('hola amigo')
 		return
 	}
 
-	msg.reply('Unknown command: ' + command)
+	//msg.reply('Unknown command: ' + command)
 });
 
 
-client.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);
