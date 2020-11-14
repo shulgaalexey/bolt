@@ -14,6 +14,7 @@ client.on('message', async msg => {
 		msg.reply('pong');
 		return;
     }
+	return
 
 	if(!msg.content.startsWith(cmdPrefix)) {
 		msg.reply('IDK WTF is: ' + msg.content)
