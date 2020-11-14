@@ -33,7 +33,15 @@ bot.on('message', async msg => {
 	//log any arguments passed with a command
 	console.log(args)
 
-	if (comand === 'ok') {
+	if (command === 'help') {
+		msg.reply(`help:
+ping - pong
+ok - ok
+hola - greetings
+thanks`)
+	}
+
+	if (command === 'ok') {
 		msg.reply('ok')
 	}
 
