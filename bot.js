@@ -10,6 +10,7 @@ bot.on('ready', () => {
 const cmdPrefix = '!'
 
 bot.on('message', async msg => {
+	console.log('>>> ' + msg.content);
 	if (msg.content === 'ping') {
 		msg.reply('pong');
 		return;
