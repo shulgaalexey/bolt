@@ -13,12 +13,12 @@ bot.on('message', async msg => {
 	if (msg.content === 'ping') {
 		msg.reply('pong');
 		return;
-    	}
+	}
 
-	/*if(!msg.content.startsWith(cmdPrefix)) {
-		msg.reply('IDK WTF is: ' + msg.content)
+	if(!msg.content.startsWith(cmdPrefix)) {
+		//msg.reply('IDK WTF is: ' + msg.content)
 		return
-	}*/
+	}
 
 	// slices off prefix from our message, then trims extra whitespace,
 	// then returns our array of words from the message
@@ -32,7 +32,7 @@ bot.on('message', async msg => {
 
 	//log any arguments passed with a command
 	console.log(args)
-	
+
 	if (comand === 'ok') {
 		msg.reply('ok')
 	}
