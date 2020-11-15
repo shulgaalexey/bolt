@@ -84,7 +84,7 @@ Thanks`)
 	if(command === 'ask') {
 		// TODO change the date in the URL
 		let witUrl = "curl -H "
-		+ "'Authorization: Bearer " + process.env.BOT_TOKEN + "' "
+		+ "'Authorization: Bearer " + process.env.WIT_BEARER + "' "
 		+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
 		console.log(witUrl)
 		let getIntent = async () => {
