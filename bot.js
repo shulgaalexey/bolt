@@ -18,7 +18,7 @@ bot.on('message', async (msg) => {
 		return;
 	}
 
-	if (msg.content.startsWith('<@') {
+	if (msg.content.startsWith('<@')) {
 		// This is when a message starts with a user mention
 		console.log('I am not trained to handle personal targeting messages');
 		return;
