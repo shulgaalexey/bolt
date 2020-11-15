@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const fetch = require('node-fetch')
 
 
 bot.on('ready', () => {
@@ -9,10 +10,17 @@ bot.on('ready', () => {
 
 const cmdPrefix = '!'
 
-bot.on('message', async msg => {
+bot.on('message', async (msg) => {
 	console.log('>>> ' + msg.content);
+
 	if (msg.content === 'ping') {
 		msg.reply('pong');
+		return;
+	}
+
+	if (msg.content.startsWith('<@') {
+		// This is when a message starts with a user mention
+		console.log('I am not trained to handle personal targeting messages');
 		return;
 	}
 
@@ -44,12 +52,31 @@ thanks`)
 
 	if (command === 'ok') {
 		msg.reply('ok')
+		return
 	}
 
 	if (command === 'hola') {
 		msg.reply('hola amigo')
 		return
 	}
+
+	if(command === 'joke') {
+      let getJoke = async () => {
+        let result =
+			  await fetch('https://official-joke-api.appspot.com/random_joke')
+        let json = await result.json()
+        return json
+      }
+
+      let joke = await getJoke()
+
+      msg.reply(`
+      Here's your joke
+      ${joke.setup}
+      ${joke.punchline}
+		  `)
+      return
+  }
 
 	//msg.reply('Unknown command: ' + command)
 });
