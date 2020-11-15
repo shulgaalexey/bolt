@@ -127,13 +127,13 @@ Thanks`)
 			case 'leql_group': {
 				console.log('LEQL Groupby');
 				const key = witResp.entities['key:key'][0].body;
-				msg.reply('groupby(' + key + ')');
+				msg.reply('where(' + key + ') groupby(' + key + ')');
 				return;
 			}
 			case "leql_calculate": {
 				console.log('LEQL Calculate');
 				const key = witResp.entities['key:key'][0].body;
-				msg.reply('calculate(' + key + ')');
+				msg.reply('where(' + key + ') calculate(' + key + ')');
 				return;
 			}
 			case 'ask_for_something':
