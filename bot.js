@@ -82,18 +82,46 @@ Thanks`)
 
 
 	if(command === 'ask') {
-		// TODO change the date in the URL
-		let witUrl = "curl -H "
-		+ "'Authorization: Bearer " + process.env.WIT_BEARER + "' "
-		+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
+		// TODO addd proper question and the date in the URL
+		//let witUrl = "curl -H "
+		//+ "'Authorization: Bearer " + process.env.WIT_BEARER + "' "
+		//+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
+
+		let witUrl = 'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine';
 		console.log(witUrl)
 		let getIntent = async () => {
-			let result = await fetch(witUrl)
-			let json = await result.json()
-			return json
+			let result = await fetch(witUrl, {
+				method: "GET",
+				headers: {"Authorization": "Bearer " + process.env.WIT_BEARER}
+			})
+			.then(resp => resp.json())
+			.then(json => {
+				console.log(json)
+				if (json.error && json.error.message) {
+					console.log("ERROR");
+					throw new Error(json.error.message);
+				}
+				return json;
+			});
+			//let json = await result.json()
+			//return json
 		}
 
 		let witResp = await getIntent()
+		console.log(witResp)
+		console.log(JSON.stringify(witResp));
+		const intent = witResp.intents.length > 0 && witResp.intents[0];
+		switch (intent.name) {
+			case "ask_for_something":
+				console.log("asking for something");
+				break;
+			case "bring_thing":
+				console.log("bringing a thing");
+				break;
+			default:
+				console.log("UNKNOWN INTENT: " + intent.name);
+				break;
+		}
 		msg.reply(witResp.intents)
 		return
 	}
