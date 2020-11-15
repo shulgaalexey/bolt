@@ -118,21 +118,24 @@ Thanks`)
 		console.log(JSON.stringify(witResp));
 		const intent = witResp.intents.length > 0 && witResp.intents[0];
 		switch (intent.name) {
-			case 'leql_search':
+			case 'leql_search': {
 				console.log('LEQL Search');
-				let key = witResp.entities['key:key'][0].body;
+				const key = witResp.entities['key:key'][0].body;
 				msg.reply('where(' + key + ')');
 				return;
-			case 'leql_group':
+			}
+			case 'leql_group': {
 				console.log('LEQL Groupby');
-				let key = witResp.entities['key:key'][0].body;
+				const key = witResp.entities['key:key'][0].body;
 				msg.reply('groupby(' + key + ')');
 				return;
-			case "leql_calculate":
+			}
+			case "leql_calculate": {
 				console.log('LEQL Calculate');
-				let key = witResp.entities['key:key'][0].body;
+				const key = witResp.entities['key:key'][0].body;
 				msg.reply('calculate(' + key + ')');
 				return;
+			}
 			case 'ask_for_something':
 				console.log('asking for something');
 				msg.reply(intent.name + ' confidence: ' + intent.confidence)
