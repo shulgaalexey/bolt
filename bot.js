@@ -43,11 +43,12 @@ bot.on('message', async (msg) => {
 	console.log(args)
 
 	if (command === 'help') {
-		msg.reply(`help:
-ping - pong
-ok - ok
-hola - greetings
-thanks`)
+		msg.reply(`Available commands:
+!ping - pong
+!ok - ok
+!hola - greetings
+!joke - greetings
+Thanks`)
 	}
 
 	if (command === 'ok') {
