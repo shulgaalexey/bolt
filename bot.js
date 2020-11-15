@@ -101,8 +101,8 @@ Thanks`)
 		console.log(witUrl)
 		let getIntent = async () => {
 			return await fetch(witUrl, {
-				method: "GET",
-				headers: {"Authorization": "Bearer " + process.env.WIT_BEARER}
+				method: 'GET',
+				headers: {'Authorization': 'Bearer ' + process.env.WIT_BEARER}
 			})
 			.then(resp => resp.json())
 			.then(json => {
@@ -118,28 +118,29 @@ Thanks`)
 		console.log(JSON.stringify(witResp));
 		const intent = witResp.intents.length > 0 && witResp.intents[0];
 		switch (intent.name) {
-			case "leql_search":
-				console.log("LEQL Search");
-				msg.reply("where(blah)");
+			case 'leql_search':
+				console.log('LEQL Search');
+				let key = witResp.entities.key:key[0].body;
+				msg.reply('where(' + key + ')');
 				return;
-			case "leql_group":
-				console.log("LEQL Groupby");
-				msg.reply("groupby(key)");
+			case 'leql_group':
+				console.log('LEQL Groupby');
+				msg.reply('groupby(key)');
 				return;
 			case "leql_calculate":
-				console.log("LEQL Calculate");
-				msg.reply("calculate(key)");
+				console.log('LEQL Calculate');
+				msg.reply('calculate(key)');
 				return;
-			case "ask_for_something":
-				console.log("asking for something");
+			case 'ask_for_something':
+				console.log('asking for something');
 				msg.reply(intent.name + ' confidence: ' + intent.confidence)
 				return;
-			case "bring_thing":
-				console.log("bringing a thing");
+			case 'bring_thing':
+				console.log('bringing a thing');
 				msg.reply(intent.name + ' confidence: ' + intent.confidence)
 				return;
 			default:
-				console.log("UNKNOWN INTENT: " + intent.name);
+				console.log('UNKNOWN INTENT: ' + intent.name);
 				break;
 		}
 		msg.reply(witResp.intents)
