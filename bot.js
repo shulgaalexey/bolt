@@ -120,7 +120,7 @@ Thanks`)
 		switch (intent.name) {
 			case 'leql_search':
 				console.log('LEQL Search');
-				let key = witResp.entities.key:key[0].body;
+				let key = witResp.entities.['key:key'][0].body;
 				msg.reply('where(' + key + ')');
 				return;
 			case 'leql_group':
