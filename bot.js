@@ -7,6 +7,20 @@ bot.on('ready', () => {
 	console.log('Bolt is ready!');
 });
 
+function today() {
+	var today = new Date();
+	var dd = String(today.getDate()).padStart(2, '0');
+	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	var yyyy = today.getFullYear();
+	today = yyyy + mm  + dd;
+	return today;
+}
+
+function urlifyCmd(args) {
+	let utterance = args.join(' ').replace(/\s/g, '%20');
+	return utterance;
+}
+
 
 const cmdPrefix = '!'
 
@@ -82,18 +96,8 @@ Thanks`)
 
 
 	if(command === 'ask') {
-		//let witUrl = "curl -H "
-		//+ "'Authorization: Bearer " + process.env.WIT_BEARER + "' "
-		//+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
-
-		//let witUrl = 'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine';
-		let utterance = args.join(' ').replace(/\s/g, '%20')
-		var today = new Date();
-		var dd = String(today.getDate()).padStart(2, '0');
-		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-		var yyyy = today.getFullYear();
-		today = yyyy + mm  + dd;
-		let witUrl = 'https://api.wit.ai/message?v=' + today + '&q=' + utterance;
+		let witUrl = 'https://api.wit.ai/message?v=' + today()
+			+ '&q=' + urlifyCmd(args);
 		console.log(witUrl)
 		let getIntent = async () => {
 			return await fetch(witUrl, {
@@ -102,20 +106,16 @@ Thanks`)
 			})
 			.then(resp => resp.json())
 			.then(json => {
-				console.log(json)
 				if (json.error && json.error.message) {
-					console.log("ERROR");
+					console.log('ERROR: ' + json.error.message);
 					throw new Error(json.error.message);
 				}
 				return json;
 			});
-			//let json = await result.json()
-			//return json
 		}
 
 		let witResp = await getIntent()
-		console.log(witResp)
-		console.log(JSON.stringify(witResp));
+		//console.log(JSON.stringify(witResp));
 		const intent = witResp.intents.length > 0 && witResp.intents[0];
 		switch (intent.name) {
 			case "ask_for_something":
