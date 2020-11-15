@@ -90,7 +90,7 @@ Thanks`)
 		let witUrl = 'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine';
 		console.log(witUrl)
 		let getIntent = async () => {
-			let result = await fetch(witUrl, {
+			return await fetch(witUrl, {
 				method: "GET",
 				headers: {"Authorization": "Bearer " + process.env.WIT_BEARER}
 			})
