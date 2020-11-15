@@ -114,10 +114,12 @@ Thanks`)
 		switch (intent.name) {
 			case "ask_for_something":
 				console.log("asking for something");
-				break;
+				msg.reply(intent.name + ' confidence: ' + intent.confidence)
+				return;
 			case "bring_thing":
 				console.log("bringing a thing");
-				break;
+				msg.reply(intent.name + ' confidence: ' + intent.confidence)
+				return;
 			default:
 				console.log("UNKNOWN INTENT: " + intent.name);
 				break;
