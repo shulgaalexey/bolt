@@ -48,6 +48,7 @@ bot.on('message', async (msg) => {
 !ok - ok
 !hola - greetings
 !joke - greetings
+!ask - ask me anything on your natural language
 Thanks`)
 	}
 
@@ -78,6 +79,25 @@ Thanks`)
 		  `)
       return
   }
+
+
+	if(command === 'ask') {
+		// TODO change the date in the URL
+		let witUrl = "curl -H "
+		+ "'Authorization: Bearer " + process.env.BOT_TOKEN + "' "
+		+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
+		console.log(witUrl)
+		let getIntent = async () => {
+			let result = await fetch(witUrl)
+			let json = await result.json()
+			return json
+		}
+
+		let witResp = await getIntent()
+		msg.reply(witResp.intents)
+		return
+	}
+
 
 	//msg.reply('Unknown command: ' + command)
 });
