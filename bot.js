@@ -95,7 +95,7 @@ Thanks`)
   }
 
 
-	if(command === 'ask') {
+	if(command === 'leql') {
 		let witUrl = 'https://api.wit.ai/message?v=' + today()
 			+ '&q=' + urlifyCmd(args);
 		console.log(witUrl)
@@ -115,9 +115,21 @@ Thanks`)
 		}
 
 		let witResp = await getIntent()
-		//console.log(JSON.stringify(witResp));
+		console.log(JSON.stringify(witResp));
 		const intent = witResp.intents.length > 0 && witResp.intents[0];
 		switch (intent.name) {
+			case "leql_search":
+				console.log("LEQL Search");
+				msg.reply("where(blah)");
+				return;
+			case "leql_group":
+				console.log("LEQL Groupby");
+				msg.reply("groupby(key)");
+				return;
+			case "leql_calculate":
+				console.log("LEQL Calculate");
+				msg.reply("calculate(key)");
+				return;
 			case "ask_for_something":
 				console.log("asking for something");
 				msg.reply(intent.name + ' confidence: ' + intent.confidence)
