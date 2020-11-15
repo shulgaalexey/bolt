@@ -82,12 +82,18 @@ Thanks`)
 
 
 	if(command === 'ask') {
-		// TODO addd proper question and the date in the URL
 		//let witUrl = "curl -H "
 		//+ "'Authorization: Bearer " + process.env.WIT_BEARER + "' "
 		//+ "'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine'";
 
-		let witUrl = 'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine';
+		//let witUrl = 'https://api.wit.ai/message?v=20201115&q=order%20me%20some%20wine';
+		let utterance = args.join(' ').replace(/\s/g, '%20')
+		var today = new Date();
+		var dd = String(today.getDate()).padStart(2, '0');
+		var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		var yyyy = today.getFullYear();
+		today = yyyy + mm  + dd;
+		let witUrl = 'https://api.wit.ai/message?v=' + today + '&q=' + utterance;
 		console.log(witUrl)
 		let getIntent = async () => {
 			return await fetch(witUrl, {
