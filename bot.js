@@ -119,7 +119,12 @@ Here's your joke:
 
         let witResp = await getIntent()
         console.log(JSON.stringify(witResp));
-        const intent = witResp.intents.length > 0 && witResp.intents[0];
+		if (witResp.intents.length == 0) {
+            msg.reply(`One day I'll know how to tranclate [${urlifyCmd(args)}] into leql, but now you could try where((/.*/)`);
+			return
+		}
+
+        const intent = witResp.intents[0];
         switch (intent.name) {
             case 'leql_search': {
                 console.log('LEQL Search');
@@ -141,6 +146,8 @@ Here's your joke:
             }
             default:
                 console.log(`UNKNOWN INTENT: ${intent.name}`);
+                msg.reply(`One day I'll know how to handle [${intent.name}] intent.
+Now you could try where(/.*/)`);
                 break;
         }
         msg.reply(witResp.intents)
