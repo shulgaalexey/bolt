@@ -1,4 +1,4 @@
 # bolt
 Bot for language
 
-![Architecture](architecture.svg)
+![Architecture](architecture.png)
