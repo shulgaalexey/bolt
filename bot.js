@@ -120,7 +120,9 @@ Here's your joke:
         let witResp = await getIntent()
         console.log(JSON.stringify(witResp));
 		if (witResp.intents.length == 0) {
-            msg.reply(`One day I'll know how to tranclate [${urlifyCmd(args)}] into leql, but now you could try where((/.*/)`);
+            msg.reply(
+`One day I'll know how to translate [${urlifyCmd(args)}] into leql,
+but now you could try where(/.*/)`);
 			return
 		}
 
@@ -150,7 +152,6 @@ Here's your joke:
 Now you could try where(/.*/)`);
                 break;
         }
-        msg.reply(witResp.intents)
         return
     }
 });
