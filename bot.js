@@ -20,6 +20,16 @@ function urlifyCmd(args) {
     return utterance;
 }
 
+function notPlural(str) {
+    if (str.endsWith('s)) {
+        return str.slice(0, -1);
+    }
+    if (str.endsWith('es)) {
+        return str.slice(0, -2);
+    }
+	return str;
+}
+
 
 const cmdPrefix = '!'
 
@@ -113,19 +123,19 @@ Here's your joke:
         switch (intent.name) {
             case 'leql_search': {
                 console.log('LEQL Search');
-                const key = witResp.entities['key:key'][0].body;
+                const key = notPlural(witResp.entities['key:key'][0].body);
                 msg.reply(`where(${key})`);
                 return;
             }
             case 'leql_group': {
                 console.log('LEQL Groupby');
-                const key = witResp.entities['key:key'][0].body;
+                const key = notPlural(witResp.entities['key:key'][0].body);
                 msg.reply(`where(${key}) groupby(${key})`);
                 return;
             }
             case "leql_calculate": {
                 console.log('LEQL Calculate');
-                const key = witResp.entities['key:key'][0].body;
+                const key = notPlural(witResp.entities['key:key'][0].body);
                 msg.reply(`where(${key}) calculate(${key})`);
                 return;
             }
