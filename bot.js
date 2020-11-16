@@ -143,7 +143,7 @@ but now you could try where(/.*/)`);
             case "leql_calculate": {
                 console.log('LEQL Calculate');
                 const key = notPlural(witResp.entities['key:key'][0].body);
-                msg.reply(`where(${key}) calculate(${key})`);
+                msg.reply(`where(${key}) calculate(count)`);
                 return;
             }
             default:
