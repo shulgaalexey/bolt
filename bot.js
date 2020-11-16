@@ -8,16 +8,16 @@ bot.on('ready', () => {
 });
 
 function today() {
-	var today = new Date();
-	var dd = String(today.getDate()).padStart(2, '0');
-	var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-	var yyyy = today.getFullYear();
+	const today = new Date();
+	const dd = String(today.getDate()).padStart(2, '0');
+	const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+	const yyyy = today.getFullYear();
 	today = yyyy + mm  + dd;
 	return today;
 }
 
 function urlifyCmd(args) {
-	let utterance = args.join(' ').replace(/\s/g, '%20');
+	const utterance = args.join(' ').replace(/\s/g, '%20');
 	return utterance;
 }
 
@@ -34,7 +34,7 @@ bot.on('message', async (msg) => {
 
 	if (msg.content.startsWith('<@')) {
 		// This is when a message starts with a user mention
-		console.log('I am not trained to handle personal targeting messages');
+		console.log('I am not trained to handle personaly targeted messages');
 		return;
 	}
 
@@ -50,26 +50,18 @@ bot.on('message', async (msg) => {
 	//splits off the first word from the array, which will be our command
 	const command = args.shift().toLowerCase()
 
-	//log the command
-	console.log('command: ', command)
-
-	//log any arguments passed with a command
-	console.log(args)
+	//log the command and arguments passed with a command
+	console.log(`command: ${command}, args: ${args}`)
 
 	if (command === 'help') {
 		msg.reply(`Available commands:
-!ping - pong
-!ok - ok
+ping - pong
 !hola - greetings
 !joke - greetings
-!ask - ask me anything on your natural language
+!leql - ask me anything you want to search for
 Thanks`)
 	}
 
-	if (command === 'ok') {
-		msg.reply('ok')
-		return
-	}
 
 	if (command === 'hola') {
 		msg.reply('hola amigo')
@@ -90,24 +82,24 @@ Thanks`)
       Here's your joke
       ${joke.setup}
       ${joke.punchline}
-		  `)
+	`)
       return
   }
 
 
 	if(command === 'leql') {
-		let witUrl = 'https://api.wit.ai/message?v=' + today()
-			+ '&q=' + urlifyCmd(args);
+		const witUrl =
+			`https://api.wit.ai/message?v=${today()}&q=${urlifyCmd(args)}`;
 		console.log(witUrl)
 		let getIntent = async () => {
 			return await fetch(witUrl, {
 				method: 'GET',
-				headers: {'Authorization': 'Bearer ' + process.env.WIT_BEARER}
+				headers: {'Authorization': `Bearer ${process.env.WIT_BEARER}`}
 			})
 			.then(resp => resp.json())
 			.then(json => {
 				if (json.error && json.error.message) {
-					console.log('ERROR: ' + json.error.message);
+					console.log(`ERROR: ${json.error.message}`);
 					throw new Error(json.error.message);
 				}
 				return json;
@@ -121,39 +113,28 @@ Thanks`)
 			case 'leql_search': {
 				console.log('LEQL Search');
 				const key = witResp.entities['key:key'][0].body;
-				msg.reply('where(' + key + ')');
+				msg.reply(`where(${key})`);
 				return;
 			}
 			case 'leql_group': {
 				console.log('LEQL Groupby');
 				const key = witResp.entities['key:key'][0].body;
-				msg.reply('where(' + key + ') groupby(' + key + ')');
+				msg.reply(`where(${key}) groupby(${key})`);
 				return;
 			}
 			case "leql_calculate": {
 				console.log('LEQL Calculate');
 				const key = witResp.entities['key:key'][0].body;
-				msg.reply('where(' + key + ') calculate(' + key + ')');
+				msg.reply(`where(${key}) calculate(${key})`);
 				return;
 			}
-			case 'ask_for_something':
-				console.log('asking for something');
-				msg.reply(intent.name + ' confidence: ' + intent.confidence)
-				return;
-			case 'bring_thing':
-				console.log('bringing a thing');
-				msg.reply(intent.name + ' confidence: ' + intent.confidence)
-				return;
 			default:
-				console.log('UNKNOWN INTENT: ' + intent.name);
+				console.log(`UNKNOWN INTENT: ${intent.name}`);
 				break;
 		}
 		msg.reply(witResp.intents)
 		return
 	}
-
-
-	//msg.reply('Unknown command: ' + command)
 });
 
 
