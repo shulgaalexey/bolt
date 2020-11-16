@@ -21,10 +21,10 @@ function urlifyCmd(args) {
 }
 
 function notPlural(str) {
-    if (str.endsWith('s)) {
+    if (str.endsWith('s')) {
         return str.slice(0, -1);
     }
-    if (str.endsWith('es)) {
+    if (str.endsWith('es')) {
         return str.slice(0, -2);
     }
 	return str;
